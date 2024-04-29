@@ -1,0 +1,23 @@
+{
+  "name": "su7-webpgu",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@orillusion/core": "^0.7.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.16.0",
+    "@types/node": "^20.12.7",
+    "eslint": "^9.1.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  }
+}
