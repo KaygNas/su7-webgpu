@@ -10,6 +10,8 @@ import {
   Object3D,
   OrbitController,
   Scene3D,
+  SkyRenderer,
+  SolidColorSky,
   SphereGeometry,
   SpotLight,
   UnLitMaterial,
@@ -24,6 +26,16 @@ async function init() {
   await Engine3D.init()
 
   const scene3D = new Scene3D()
+
+  // Create a solid color map
+  const colorSky = new SolidColorSky(new Color(1, 1, 1, 1))
+  // Add SkyRenderer component, then set map texture
+  const sky = scene3D.addComponent(SkyRenderer)
+  sky.map = colorSky
+  sky.exposure = 60
+
+  // Set monochrome ambient light at the same time
+  scene3D.envMap = colorSky
 
   // 新建摄像机实例
   const cameraObj = new Object3D()
