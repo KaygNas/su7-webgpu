@@ -1,11 +1,17 @@
 import {
   AtmosphericComponent,
   Camera3D,
+  Color,
   DirectLight,
   Engine3D,
-  HoverCameraController,
+  LitMaterial,
+  MeshRenderer,
   Object3D,
+  OrbitController,
   Scene3D,
+  SphereGeometry,
+  UnLitMaterial,
+  Vector3,
   View3D,
 } from '@orillusion/core'
 import CAR_MODEL_URL from '@static/models/sm_car/sm_car.gltf?url'
@@ -17,35 +23,39 @@ async function init() {
 
   const scene3D = new Scene3D()
 
-  // 添加大气散射天空组件
-  scene3D.addComponent(AtmosphericComponent)
+  // scene3D.envMap
 
   // 新建摄像机实例
   const cameraObj = new Object3D()
+  cameraObj.localPosition.set(0, 2, 5)
   const camera = cameraObj.addComponent(Camera3D)
   // 根据窗口大小设置摄像机视角
-  camera.perspective(60, window.innerWidth / window.innerHeight, 1, 5000.0)
+  camera.perspective(45, window.innerWidth / window.innerHeight, 0.1, 500.0)
   // 设置相机控制器
-  const controller = camera.object3D.addComponent(HoverCameraController)
-  controller.setCamera(0, 0, 15)
+  const controller = camera.object3D.addComponent(OrbitController)
+  controller.minDistance = 3
+  controller.maxDistance = 7
+  controller.minPolarAngle = 0
+  controller.maxPolarAngle = (90 - 1) * (Math.PI * 2 / 360)
   // 添加相机节点
   scene3D.addChild(cameraObj)
-
-  // 新建光照
-  const light = new Object3D()
-  // 添加直接光组件
-  const component = light.addComponent(DirectLight)
-  // 调整光照参数
-  light.rotationX = 45
-  light.rotationY = 30
-  component.intensity = 2
-  // 添加光照对象
-  scene3D.addChild(light)
 
   const carObj = await Engine3D.res.loadGltf(CAR_MODEL_URL)
   scene3D.addChild(carObj)
 
   const startroomObj = await Engine3D.res.loadGltf(STARTROOM_MODEL_URL)
+  // add material to light
+  const lightObj = startroomObj.getChildByName('light.001') as Object3D
+  const lightMr = lightObj.getComponentsInChild(MeshRenderer)[0]
+  const lightMat = new LitMaterial()
+  lightMr.material = lightMat
+  lightMat.emissiveColor = new Color(1, 1, 1, 1)
+  lightMat.emissiveIntensity = 1
+  lightMat.transparent = true
+  lightMat.alphaCutoff = 0.01
+
+  // add material to floor
+
   scene3D.addChild(startroomObj)
 
   const speedupObj = await Engine3D.res.loadGltf(SPEEDUP_MODEL_URL)
