@@ -1,22 +1,24 @@
 import {
   AtmosphericComponent,
-  BoxGeometry,
   Camera3D,
   DirectLight,
   Engine3D,
   HoverCameraController,
-  LitMaterial,
-  MeshRenderer,
   Object3D,
   Scene3D,
   View3D,
 } from '@orillusion/core'
+import CAR_MODEL_URL from '@static/models/sm_car/sm_car.gltf?url'
+import SPEEDUP_MODEL_URL from '@static/models/sm_speedup/sm_speedup.gltf?url'
+import STARTROOM_MODEL_URL from '@static/models/sm_startroom/sm_startroom.gltf?url'
 
 async function init() {
   await Engine3D.init()
+
   const scene3D = new Scene3D()
+
   // 添加大气散射天空组件
-  const sky = scene3D.addComponent(AtmosphericComponent)
+  scene3D.addComponent(AtmosphericComponent)
 
   // 新建摄像机实例
   const cameraObj = new Object3D()
@@ -40,15 +42,14 @@ async function init() {
   // 添加光照对象
   scene3D.addChild(light)
 
-  // 新建对象
-  const obj = new Object3D()
-  // 为对象添 MeshRenderer
-  const mr = obj.addComponent(MeshRenderer)
-  // 设置几何体
-  mr.geometry = new BoxGeometry(5, 5, 5)
-  // 设置材质
-  mr.material = new LitMaterial()
-  scene3D.addChild(obj)
+  const carObj = await Engine3D.res.loadGltf(CAR_MODEL_URL)
+  scene3D.addChild(carObj)
+
+  const startroomObj = await Engine3D.res.loadGltf(STARTROOM_MODEL_URL)
+  scene3D.addChild(startroomObj)
+
+  const speedupObj = await Engine3D.res.loadGltf(SPEEDUP_MODEL_URL)
+  scene3D.addChild(speedupObj)
 
   // 创建View3D对象
   const view = new View3D()
