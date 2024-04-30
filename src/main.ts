@@ -1,26 +1,23 @@
 import {
-  AtmosphericComponent,
   Camera3D,
   Color,
-  DirectLight,
   Engine3D,
-  Light,
   LitMaterial,
   MeshRenderer,
   Object3D,
   OrbitController,
+  RenderShaderPass,
   Scene3D,
+  Shader,
+  ShaderLib,
   SkyRenderer,
   SolidColorSky,
-  SphereGeometry,
-  SpotLight,
-  UnLitMaterial,
-  Vector3,
   View3D,
 } from '@orillusion/core'
 import CAR_MODEL_URL from '@static/models/sm_car/sm_car.gltf?url'
 import SPEEDUP_MODEL_URL from '@static/models/sm_speedup/sm_speedup.gltf?url'
 import STARTROOM_MODEL_URL from '@static/models/sm_startroom/sm_startroom.gltf?url'
+import speedupShader from './shaders/speedup.wgsl?raw'
 
 async function init() {
   await Engine3D.init()
@@ -76,7 +73,7 @@ async function init() {
   lightMr.material = lightMat
 
   // add material to floor
-  const lightMap = await Engine3D.res.loadTexture('/textures/t_startroom_light.raw.jpg')
+  // const lightMap = await Engine3D.res.loadTexture('/textures/t_startroom_light.raw.jpg')
   const startRoomAoMap = await Engine3D.res.loadTexture('/textures/t_startroom_ao.raw.jpg')
   const floorroughnessMap = await Engine3D.res.loadTexture('/textures/t_floor_roughness.webp')
   const floornormalMap = await Engine3D.res.loadTexture('/textures/t_floor_normal.webp')
@@ -91,6 +88,19 @@ async function init() {
   scene3D.addChild(startroomObj)
 
   const speedupObj = await Engine3D.res.loadGltf(SPEEDUP_MODEL_URL)
+  const speedupMr = speedupObj.getComponentsInChild(MeshRenderer)[0]
+  const speedupMat = new LitMaterial()
+  ShaderLib.register('speedupShader', speedupShader)
+  // Create RenderShaderPass instance
+  const renderShader = new RenderShaderPass('speedupShader', 'speedupShader')
+  renderShader.setShaderEntry('vert_main', 'frag_main')
+  // create Shader instance
+  const shader = new Shader()
+  // create RenderShaderPass instance
+  shader.addRenderPass(renderShader)
+  // speedupMat.shader = shader
+  // speedupMat.shader.
+  speedupMr.material = speedupMat
   scene3D.addChild(speedupObj)
 
   // 创建View3D对象
