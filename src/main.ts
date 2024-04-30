@@ -14,10 +14,8 @@ import {
   SolidColorSky,
   View3D,
 } from '@orillusion/core'
-import CAR_MODEL_URL from '@static/models/sm_car/sm_car.gltf?url'
-import SPEEDUP_MODEL_URL from '@static/models/sm_speedup/sm_speedup.gltf?url'
-import STARTROOM_MODEL_URL from '@static/models/sm_startroom/sm_startroom.gltf?url'
 import speedupShader from './shaders/speedup.wgsl?raw'
+import { joinStaticBaseUrl } from '@/utils'
 
 async function init() {
   await Engine3D.init()
@@ -49,9 +47,9 @@ async function init() {
   // 添加相机节点
   scene3D.addChild(cameraObj)
 
-  const carObj = await Engine3D.res.loadGltf(CAR_MODEL_URL)
+  const carObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_car/sm_car.gltf'))
   // add material to car
-  const aoMap = await Engine3D.res.loadTexture('/textures/t_car_body_AO.raw.jpg')
+  const aoMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_car_body_AO.raw.jpg'))
   const carMr = carObj.getComponentsInChild(MeshRenderer)[0]
   const carMat = new LitMaterial()
   const carBodyColor = new Color()
@@ -61,7 +59,8 @@ async function init() {
   carMr.material = carMat
   scene3D.addChild(carObj)
 
-  const startroomObj = await Engine3D.res.loadGltf(STARTROOM_MODEL_URL)
+  const startroomObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_startroom/sm_startroom.gltf'))
+
   // add material to light
   const lightObj = startroomObj.getChildByName('light.001') as Object3D
   const lightMr = lightObj.getComponentsInChild(MeshRenderer)[0]
@@ -74,9 +73,9 @@ async function init() {
 
   // add material to floor
   // const lightMap = await Engine3D.res.loadTexture('/textures/t_startroom_light.raw.jpg')
-  const startRoomAoMap = await Engine3D.res.loadTexture('/textures/t_startroom_ao.raw.jpg')
-  const floorroughnessMap = await Engine3D.res.loadTexture('/textures/t_floor_roughness.webp')
-  const floornormalMap = await Engine3D.res.loadTexture('/textures/t_floor_normal.webp')
+  const startRoomAoMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_startroom_ao.raw.jpg'))
+  const floorroughnessMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_floor_roughness.webp'))
+  const floornormalMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_floor_normal.webp'))
   const floorObj = startroomObj.getChildByName('ReflecFloor') as Object3D
   const floorMr = floorObj.getComponentsInChild(MeshRenderer)[0]
   const floorMat = new LitMaterial()
@@ -87,7 +86,7 @@ async function init() {
 
   scene3D.addChild(startroomObj)
 
-  const speedupObj = await Engine3D.res.loadGltf(SPEEDUP_MODEL_URL)
+  const speedupObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_speedup/sm_speedup.gltf'))
   const speedupMr = speedupObj.getComponentsInChild(MeshRenderer)[0]
   const speedupMat = new LitMaterial()
   ShaderLib.register('speedupShader', speedupShader)
