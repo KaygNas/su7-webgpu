@@ -4,12 +4,14 @@ import {
   Color,
   DirectLight,
   Engine3D,
+  Light,
   LitMaterial,
   MeshRenderer,
   Object3D,
   OrbitController,
   Scene3D,
   SphereGeometry,
+  SpotLight,
   UnLitMaterial,
   Vector3,
   View3D,
@@ -22,8 +24,6 @@ async function init() {
   await Engine3D.init()
 
   const scene3D = new Scene3D()
-
-  // scene3D.envMap
 
   // 新建摄像机实例
   const cameraObj = new Object3D()
@@ -41,6 +41,12 @@ async function init() {
   scene3D.addChild(cameraObj)
 
   const carObj = await Engine3D.res.loadGltf(CAR_MODEL_URL)
+  // add material to car
+  const aoMap = await Engine3D.res.loadTexture('/textures/t_car_body_AO.raw.jpg')
+  const carMr = carObj.getComponentsInChild(MeshRenderer)[0]
+  const carMat = new LitMaterial()
+  carMat.aoMap = aoMap
+  carMr.material = carMat
   scene3D.addChild(carObj)
 
   const startroomObj = await Engine3D.res.loadGltf(STARTROOM_MODEL_URL)
@@ -48,13 +54,24 @@ async function init() {
   const lightObj = startroomObj.getChildByName('light.001') as Object3D
   const lightMr = lightObj.getComponentsInChild(MeshRenderer)[0]
   const lightMat = new LitMaterial()
-  lightMr.material = lightMat
   lightMat.emissiveColor = new Color(1, 1, 1, 1)
   lightMat.emissiveIntensity = 1
   lightMat.transparent = true
   lightMat.alphaCutoff = 0.01
+  lightMr.material = lightMat
 
   // add material to floor
+  const lightMap = await Engine3D.res.loadTexture('/textures/t_startroom_light.raw.jpg')
+  const startRoomAoMap = await Engine3D.res.loadTexture('/textures/t_startroom_ao.raw.jpg')
+  const floorroughnessMap = await Engine3D.res.loadTexture('/textures/t_floor_roughness.webp')
+  const floornormalMap = await Engine3D.res.loadTexture('/textures/t_floor_normal.webp')
+  const floorObj = startroomObj.getChildByName('ReflecFloor') as Object3D
+  const floorMr = floorObj.getComponentsInChild(MeshRenderer)[0]
+  const floorMat = new LitMaterial()
+  floorMat.clearCoatRoughnessMap = floorroughnessMap
+  floorMat.aoMap = startRoomAoMap
+  floorMat.normalMap = floornormalMap
+  floorMr.material = floorMat
 
   scene3D.addChild(startroomObj)
 
