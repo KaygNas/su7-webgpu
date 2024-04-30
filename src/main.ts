@@ -57,6 +57,9 @@ async function init() {
   const aoMap = await Engine3D.res.loadTexture('/textures/t_car_body_AO.raw.jpg')
   const carMr = carObj.getComponentsInChild(MeshRenderer)[0]
   const carMat = new LitMaterial()
+  const carBodyColor = new Color()
+  carBodyColor.setHex('#26D6E9')
+  carMat.baseColor = carBodyColor
   carMat.aoMap = aoMap
   carMr.material = carMat
   scene3D.addChild(carObj)
