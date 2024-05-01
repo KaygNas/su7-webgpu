@@ -14,7 +14,7 @@ import {
   SolidColorSky,
   View3D,
 } from '@orillusion/core'
-import speedupShader from './shaders/speedup.wgsl?raw'
+import { SpeedupMaterial } from './speedup-material'
 import { joinStaticBaseUrl } from '@/utils'
 
 async function init() {
@@ -88,17 +88,7 @@ async function init() {
 
   const speedupObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_speedup/sm_speedup.gltf'))
   const speedupMr = speedupObj.getComponentsInChild(MeshRenderer)[0]
-  const speedupMat = new LitMaterial()
-  ShaderLib.register('speedupShader', speedupShader)
-  // Create RenderShaderPass instance
-  const renderShader = new RenderShaderPass('speedupShader', 'speedupShader')
-  renderShader.setShaderEntry('vert_main', 'frag_main')
-  // create Shader instance
-  const shader = new Shader()
-  // create RenderShaderPass instance
-  shader.addRenderPass(renderShader)
-  // speedupMat.shader = shader
-  // speedupMat.shader.
+  const speedupMat = new SpeedupMaterial()
   speedupMr.material = speedupMat
   scene3D.addChild(speedupObj)
 
