@@ -12,6 +12,7 @@ import {
   ShaderLib,
   SkyRenderer,
   SolidColorSky,
+  VertexAttributeName,
   View3D,
 } from '@orillusion/core'
 import { SpeedupMaterial } from './speedup-material'
@@ -88,6 +89,7 @@ async function init() {
 
   const speedupObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_speedup/sm_speedup.gltf'))
   const speedupMr = speedupObj.getComponentsInChild(MeshRenderer)[0]
+  console.log(speedupMr.geometry.vertexAttributeMap)
   const speedupMat = new SpeedupMaterial()
   speedupMr.material = speedupMat
   scene3D.addChild(speedupObj)
