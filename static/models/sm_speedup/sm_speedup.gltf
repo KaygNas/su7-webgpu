@@ -7,17 +7,28 @@
     {
       "type": "SCALAR",
       "componentType": 5123,
-      "count": 2094
+      "count": 2592,
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 586,
+      "bufferView": 1,
+      "byteOffset": 0
     },
     {
       "type": "VEC3",
       "componentType": 5126,
-      "count": 406
+      "count": 586,
+      "bufferView": 1,
+      "byteOffset": 8
     },
     {
       "type": "VEC3",
       "componentType": 5126,
-      "count": 406,
+      "count": 586,
       "max": [
         1,
         0.027222510427236557,
@@ -27,20 +38,30 @@
         -1,
         -0.027222510427236557,
         -0.05493331700563431
-      ]
+      ],
+      "bufferView": 1,
+      "byteOffset": 20
     }
   ],
   "bufferViews": [
     {
       "buffer": 0,
       "byteOffset": 0,
-      "byteLength": 2386
+      "byteLength": 5184,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 5184,
+      "byteLength": 18752,
+      "byteStride": 32,
+      "target": 34962
     }
   ],
   "buffers": [
     {
       "uri": "sm_speedup_data.bin",
-      "byteLength": 2386
+      "byteLength": 23936
     }
   ],
   "meshes": [
@@ -49,20 +70,12 @@
       "primitives": [
         {
           "attributes": {
-            "NORMAL": 1,
-            "POSITION": 2
+            "TEXCOORD_0": 1,
+            "NORMAL": 2,
+            "POSITION": 3
           },
           "mode": 4,
-          "indices": 0,
-          "extensions": {
-            "KHR_draco_mesh_compression": {
-              "bufferView": 0,
-              "attributes": {
-                "NORMAL": 0,
-                "POSITION": 1
-              }
-            }
-          }
+          "indices": 0
         }
       ]
     }
@@ -91,13 +104,5 @@
       ]
     }
   ],
-  "scene": 0,
-  "extensionsUsed": [
-    "KHR_mesh_quantization",
-    "KHR_draco_mesh_compression"
-  ],
-  "extensionsRequired": [
-    "KHR_mesh_quantization",
-    "KHR_draco_mesh_compression"
-  ]
+  "scene": 0
 }
