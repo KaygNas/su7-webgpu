@@ -45,7 +45,7 @@ async function init() {
 
   const carObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_car/sm_car.gltf'))
   // add material to car
-  const aoMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_car_body_AO.raw.jpg'))
+  await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_car_body_AO.raw.jpg'))
   scene3D.addChild(carObj)
 
   const startroomObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_startroom/sm_startroom.gltf'))
@@ -60,10 +60,10 @@ async function init() {
   lightMat.alphaCutoff = 0.01
   lightMr.material = lightMat
 
-  const lightingObj1 = new LightingObject()
+  const lightingObj1 = new LightingObject({ castShadow: true })
   lightingObj1.localRotation.x = 90
   lightingObj1.localPosition.copyFrom(lightObj.localPosition)
-  lightingObj1.localPosition.y = 2.5
+  lightingObj1.localPosition.y = 3
 
   const lightingObj2 = new LightingObject()
   lightingObj2.localRotation.x = 0
@@ -98,12 +98,11 @@ async function init() {
   // add material to floor
   // const lightMap = await Engine3D.res.loadTexture('/textures/t_startroom_light.raw.jpg')
   const startRoomAoMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_startroom_ao.raw.jpg'))
-  const floorroughnessMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_floor_roughness.webp'))
+  // const floorroughnessMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_floor_roughness.webp'))
   const floornormalMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_floor_normal.webp'))
   const floorObj = startroomObj.getChildByName('ReflecFloor') as Object3D
   const floorMr = floorObj.getComponentsInChild(MeshRenderer)[0]
   const floorMat = new LitMaterial()
-  floorMat.clearCoatRoughnessMap = floorroughnessMap
   floorMat.aoMap = startRoomAoMap
   floorMat.normalMap = floornormalMap
   floorMr.material = floorMat
