@@ -1,0 +1,11 @@
+Model Information:
+* title:	Su7-xiaomini
+* source:	https://sketchfab.com/3d-models/su7-xiaomini-546caa8dc2224ec986d470feb9ab4e63
+* author:	Emanu07 (https://sketchfab.com/Emanu07)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Su7-xiaomini" (https://sketchfab.com/3d-models/su7-xiaomini-546caa8dc2224ec986d470feb9ab4e63) by Emanu07 (https://sketchfab.com/Emanu07) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

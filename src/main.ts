@@ -46,13 +46,6 @@ async function init() {
   const carObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_car/sm_car.gltf'))
   // add material to car
   const aoMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_car_body_AO.raw.jpg'))
-  const carMr = carObj.getComponentsInChild(MeshRenderer)[0]
-  const carMat = new LitMaterial()
-  const carBodyColor = new Color()
-  carBodyColor.setHex('#26D6E9')
-  carMat.baseColor = carBodyColor
-  carMat.aoMap = aoMap
-  carMr.material = carMat
   scene3D.addChild(carObj)
 
   const startroomObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_startroom/sm_startroom.gltf'))
