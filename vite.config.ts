@@ -12,4 +12,13 @@ export default defineConfig({
       '@static': path.resolve(__dirname, './static/'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          orillusion: ['@orillusion/core', '@orillusion/stats'],
+        },
+      },
+    },
+  },
 })
