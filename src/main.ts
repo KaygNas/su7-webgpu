@@ -11,6 +11,7 @@ import {
   SolidColorSky,
   View3D,
 } from '@orillusion/core'
+import { Stats } from '@orillusion/stats'
 import { SpeedupMaterial } from './speedup-material'
 import { LightingObject } from './lighing'
 import { joinStaticBaseUrl } from '@/utils'
@@ -19,6 +20,8 @@ async function init() {
   await Engine3D.init()
 
   const scene3D = new Scene3D()
+
+  scene3D.addComponent(Stats)
 
   // Add SkyRenderer component, then set map texture
   const sky = scene3D.addComponent(SkyRenderer)

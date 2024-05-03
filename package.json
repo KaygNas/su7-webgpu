@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@orillusion/core": "^0.7.2"
+    "@orillusion/core": "^0.7.2",
+    "@orillusion/stats": "^0.2.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.16.0",

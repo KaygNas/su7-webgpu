@@ -8,6 +8,9 @@ dependencies:
   '@orillusion/core':
     specifier: ^0.7.2
     version: 0.7.2
+  '@orillusion/stats':
+    specifier: ^0.2.2
+    version: 0.2.2
 
 devDependencies:
   '@antfu/eslint-config':
@@ -640,6 +643,12 @@ packages:
 
   /@orillusion/core@0.7.2:
     resolution: {integrity: sha512-GeH1coIFjNWJRm8RKRd3dFwpJfDoZPbEI3cNxJnqivKKWN49HlzlOiq4RGnDcxZMdvljoB3uGVXOuzEeaLp3qA==}
+    dev: false
+
+  /@orillusion/stats@0.2.2:
+    resolution: {integrity: sha512-sXzaUT4WBz/rnY+qXZkCRzEalnec7Z+k7BTlFQGIshhzxYbnZD90sLZongc3390uWXw8Y551Ev1wKGw1sXCitw==}
+    dependencies:
+      '@orillusion/core': 0.7.2
     dev: false
 
   /@pkgjs/parseargs@0.11.0:
