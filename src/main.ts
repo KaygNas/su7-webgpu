@@ -6,16 +6,13 @@ import {
   MeshRenderer,
   Object3D,
   OrbitController,
-  RenderShaderPass,
   Scene3D,
-  Shader,
-  ShaderLib,
   SkyRenderer,
   SolidColorSky,
-  VertexAttributeName,
   View3D,
 } from '@orillusion/core'
 import { SpeedupMaterial } from './speedup-material'
+import { LightingObject } from './lighing'
 import { joinStaticBaseUrl } from '@/utils'
 
 async function init() {
@@ -23,15 +20,10 @@ async function init() {
 
   const scene3D = new Scene3D()
 
-  // Create a solid color map
-  const colorSky = new SolidColorSky(new Color(1, 1, 1, 1))
   // Add SkyRenderer component, then set map texture
   const sky = scene3D.addComponent(SkyRenderer)
+  const colorSky = new SolidColorSky(new Color(0, 0, 0, 1))
   sky.map = colorSky
-  sky.exposure = 60
-
-  // Set monochrome ambient light at the same time
-  scene3D.envMap = colorSky
 
   // 新建摄像机实例
   const cameraObj = new Object3D()
@@ -72,6 +64,41 @@ async function init() {
   lightMat.alphaCutoff = 0.01
   lightMr.material = lightMat
 
+  const lightingObj1 = new LightingObject()
+  lightingObj1.localRotation.x = 90
+  lightingObj1.localPosition.copyFrom(lightObj.localPosition)
+  lightingObj1.localPosition.y = 2.5
+
+  const lightingObj2 = new LightingObject()
+  lightingObj2.localRotation.x = 0
+  lightingObj2.localPosition.copyFrom(lightObj.localPosition)
+  lightingObj2.localPosition.y = 1
+  lightingObj2.localPosition.z = -2
+
+  const lightingObj3 = new LightingObject()
+  lightingObj3.localRotation.x = 180
+  lightingObj3.localPosition.copyFrom(lightObj.localPosition)
+  lightingObj3.localPosition.y = 1
+  lightingObj3.localPosition.z = 2
+
+  const lightingObj4 = new LightingObject()
+  lightingObj4.localRotation.y = 90
+  lightingObj4.localPosition.copyFrom(lightObj.localPosition)
+  lightingObj4.localPosition.y = 1
+  lightingObj4.localPosition.x = -5
+
+  const lightingObj5 = new LightingObject()
+  lightingObj5.localRotation.y = -90
+  lightingObj5.localPosition.copyFrom(lightObj.localPosition)
+  lightingObj5.localPosition.y = 1
+  lightingObj5.localPosition.x = 5
+
+  startroomObj.addChild(lightingObj1)
+  startroomObj.addChild(lightingObj2)
+  startroomObj.addChild(lightingObj3)
+  startroomObj.addChild(lightingObj4)
+  startroomObj.addChild(lightingObj5)
+
   // add material to floor
   // const lightMap = await Engine3D.res.loadTexture('/textures/t_startroom_light.raw.jpg')
   const startRoomAoMap = await Engine3D.res.loadTexture(joinStaticBaseUrl('/textures/t_startroom_ao.raw.jpg'))
@@ -89,7 +116,6 @@ async function init() {
 
   const speedupObj = await Engine3D.res.loadGltf(joinStaticBaseUrl('/models/sm_speedup/sm_speedup.gltf'))
   const speedupMr = speedupObj.getComponentsInChild(MeshRenderer)[0]
-  console.log(speedupMr.geometry.vertexAttributeMap)
   const speedupMat = new SpeedupMaterial()
   speedupMr.material = speedupMat
   scene3D.addChild(speedupObj)
