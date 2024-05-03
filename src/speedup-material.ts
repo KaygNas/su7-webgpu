@@ -1,19 +1,23 @@
-import { Color, Material, RenderShaderPass, Shader, ShaderLib, Vector4 } from '@orillusion/core'
+import { BlendMode, Color, Material, RenderShaderPass, Shader, ShaderLib } from '@orillusion/core'
 import speedupShader from './shaders/speedup.wgsl?raw'
+import simplexNoise from './shaders/simplex-noise.wgsl?raw'
 
 export class SpeedupMaterial extends Material {
   constructor() {
     super()
     const shader = new SpeedupShader()
     this.shader = shader
+    this.transparent = true
+    this.blendMode = BlendMode.ALPHA
   }
 }
 
 export class SpeedupShader extends Shader {
   constructor() {
     super()
-    ShaderLib.register('speedupShader', speedupShader)
-    const colorShader = new RenderShaderPass('speedupShader', 'speedupShader')
+    ShaderLib.register('SimplexNoise', simplexNoise)
+    ShaderLib.register('SpeedupShader', speedupShader)
+    const colorShader = new RenderShaderPass('SpeedupShader', 'SpeedupShader')
     colorShader.setShaderEntry(`VertMain`, `FragMain`)
     this.addRenderPass(colorShader)
 
