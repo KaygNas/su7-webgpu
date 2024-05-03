@@ -7,6 +7,9 @@
 // 引入 snoise 函数
 #include "SimplexNoise"
 
+@group(1) @binding(auto)
+var<uniform> speedFactor: f32;
+
 // must name as vert, convention defined by orrilusion
 fn vert(inputData: VertexAttributes) -> VertexOutput {
     ORI_Vert(inputData) ;
@@ -22,7 +25,7 @@ fn frag(){
     color *= vec3(1.5, 1.0, 400.); // fine tune the color
 
     var alpha = getAlpha(newUV, ORI_VertexVarying.fragUV0);
-    // alpha *= smoothstep(0., 1., uSpeedFactor) * 5.;
+    alpha *= smoothstep(0., 1., speedFactor);
 
     ORI_FragmentOutput.color = vec4<f32>(color, alpha);
 }

@@ -48,6 +48,7 @@ export class SceneSpeed {
     })
     this.startroom.lightMat.emissiveColor.a = 0
     this.startroom.lightMat.baseColor.a = 0
+    this.speedup.material.speedupShader.speedFactor = 1
   }
 
   /**
@@ -57,6 +58,7 @@ export class SceneSpeed {
     this.startroom.lightings.forEach((light) => {
       light.light.intensity = 1
     })
+    this.speedup.material.speedupShader.speedFactor = 0
   }
 
   static async create() {
