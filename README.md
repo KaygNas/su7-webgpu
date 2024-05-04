@@ -1,10 +1,10 @@
 ## su7-webpgu
 
-使用 [Orillusion](https://www.orillusion.com/) 复刻的小米SU7 交互特效。
+使用 [Orillusion](https://www.orillusion.com/) 复刻的小米SU7 交互特效。参考另一个复刻版本[KallkaGo/su7-demo](https://github.com/KallkaGo/su7-demo)的源码进行开发。
 
 - 原版: https://gamemcu.com/su7/
 - 复刻版: https://kaygnas.github.io/su7-webgpu/
-- 参考版: https://su7-demo.vercel.app/ ([GitHub](https://github.com/KallkaGo/su7-demo))
+- 参考版: https://su7-demo.vercel.app/
 
 目前与参考版有很大差距，包括：
 
