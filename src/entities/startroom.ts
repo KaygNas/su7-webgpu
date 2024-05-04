@@ -1,4 +1,4 @@
-import { Color, Engine3D, LitMaterial, MeshRenderer, Object3D } from '@orillusion/core'
+import { Color, DirectLight, Engine3D, LitMaterial, MeshRenderer, Object3D } from '@orillusion/core'
 import { LightingObject } from './lighting'
 import { joinStaticBaseUrl } from '@/utils'
 
@@ -32,25 +32,25 @@ export class StartroomObj extends Object3D {
     lightingObj1.localPosition.copyFrom(lightObj.localPosition)
     lightingObj1.localPosition.y = 3
 
-    const lightingObj2 = new LightingObject()
+    const lightingObj2 = new LightingObject({ type: DirectLight, intensity: 3 })
     lightingObj2.localRotation.x = 0
     lightingObj2.localPosition.copyFrom(lightObj.localPosition)
     lightingObj2.localPosition.y = 1
     lightingObj2.localPosition.z = -2
 
-    const lightingObj3 = new LightingObject()
+    const lightingObj3 = new LightingObject({ type: DirectLight, intensity: 3 })
     lightingObj3.localRotation.x = 180
     lightingObj3.localPosition.copyFrom(lightObj.localPosition)
     lightingObj3.localPosition.y = 1
     lightingObj3.localPosition.z = 2
 
-    const lightingObj4 = new LightingObject()
+    const lightingObj4 = new LightingObject({ type: DirectLight, intensity: 3 })
     lightingObj4.localRotation.y = 90
     lightingObj4.localPosition.copyFrom(lightObj.localPosition)
     lightingObj4.localPosition.y = 1
     lightingObj4.localPosition.x = -5
 
-    const lightingObj5 = new LightingObject()
+    const lightingObj5 = new LightingObject({ type: DirectLight, intensity: 3 })
     lightingObj5.localRotation.y = -90
     lightingObj5.localPosition.copyFrom(lightObj.localPosition)
     lightingObj5.localPosition.y = 1

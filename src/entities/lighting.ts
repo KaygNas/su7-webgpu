@@ -1,3 +1,4 @@
+import type { Ctor, DirectLight } from '@orillusion/core'
 import { Color, LitMaterial, MeshRenderer, Object3D, PlaneGeometry, PointLight } from '@orillusion/core'
 
 const LIGHTING_PLANE_VISIBLE = false
@@ -6,17 +7,19 @@ export interface LightingObjectOptions {
   castShadow?: boolean
   intensity?: number
   color?: Color
+  type?: Ctor<PointLight | DirectLight>
 }
 export class LightingObject extends Object3D {
-  light: PointLight
+  light: PointLight | DirectLight
   constructor(options: LightingObjectOptions = {}) {
     super()
     const {
       intensity = 2,
       color = new Color(1, 1, 1, 1),
       castShadow = false,
+      type = PointLight,
     } = options
-    const light = this.addComponent(PointLight)
+    const light = this.addComponent(type)
     light.color = color
     light.intensity = intensity
     light.castShadow = castShadow

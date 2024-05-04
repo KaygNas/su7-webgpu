@@ -61,7 +61,7 @@ export class SceneSpeed {
     })
       .to({
         intensityMain: 0.5,
-        intnesityOthers: 0.2,
+        intnesityOthers: 1,
         speedFactor: 1,
       }, this.duration)
       .onUpdate(({
@@ -98,7 +98,7 @@ export class SceneSpeed {
     })
       .to({
         intensityMain: 2.0,
-        intnesityOthers: 2.0,
+        intnesityOthers: 3.0,
         speedFactor: 0,
       }, this.duration)
       .onUpdate(({
