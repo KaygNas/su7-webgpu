@@ -11,6 +11,9 @@ dependencies:
   '@orillusion/stats':
     specifier: ^0.2.2
     version: 0.2.2
+  '@tweenjs/tween.js':
+    specifier: ^23.1.1
+    version: 23.1.1
 
 devDependencies:
   '@antfu/eslint-config':
@@ -866,6 +869,10 @@ packages:
       - supports-color
       - typescript
     dev: true
+
+  /@tweenjs/tween.js@23.1.1:
+    resolution: {integrity: sha512-ZpboH7pCPPeyBWKf8c7TJswtCEQObFo3bOBYalm99NzZarATALYCo5OhbCa/n4RQyJyHfhkdx+hNrdL5ByFYDw==}
+    dev: false
 
   /@types/braces@3.0.4:
     resolution: {integrity: sha512-0WR3b8eaISjEW7RpZnclONaLFDf7buaowRHdqLp4vLj54AsSAYWfh3DRbfiYJY9XDxMgx1B4sE1Afw2PGpuHOA==}

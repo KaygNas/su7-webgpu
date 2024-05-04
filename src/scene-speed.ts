@@ -1,9 +1,12 @@
 import { Engine3D, PointerEvent3D, Scene3D, View3D } from '@orillusion/core'
 import { Stats } from '@orillusion/stats'
+import * as TWEEN from '@tweenjs/tween.js'
 import { BlackBackground, CameraObj, CarObj, SpeedupObj, StartroomObj } from './entities'
 
 export class SceneSpeed {
   private touch = false
+  private duration = 1200
+  private prevTouchChange: null | (() => void) = null
   private constructor(
     public view: View3D,
     public scene: Scene3D,
@@ -30,35 +33,90 @@ export class SceneSpeed {
   }
 
   private onTouchChange() {
+    this.prevTouchChange?.()
     if (this.touch)
-      this.darkenLight()
+      this.prevTouchChange = this.darkenLight()
     else
-      this.lightenLight()
+      this.prevTouchChange = this.lightenLight()
   }
 
   /*
     将灯光调暗
   */
   private darkenLight() {
-    this.startroom.lightings.forEach((light, i) => {
-      if (i === 0)
-        light.light.intensity = 0.5
-      else
-        light.light.intensity = 0.1
+    const lightingMain = this.startroom.lightings[0]
+    const lightingOthers = this.startroom.lightings.slice(1)
+    const speedupShader = this.speedup.material.speedupShader
+    const car = this.car
+    const tweenCar = new TWEEN.Tween({}).to({})
+      // eslint-disable-next-line unicorn/prefer-number-properties
+      .repeat(Infinity)
+      .onUpdate(() => {
+        car.spinWheels()
+      })
+    const tween = new TWEEN.Tween({
+      intensityMain: lightingMain.light.intensity,
+      intnesityOthers: lightingOthers[1].light.intensity,
+      speedFactor: speedupShader.speedFactor,
     })
-    this.startroom.lightMat.emissiveColor.a = 0
-    this.startroom.lightMat.baseColor.a = 0
-    this.speedup.material.speedupShader.speedFactor = 1
+      .to({
+        intensityMain: 0.5,
+        intnesityOthers: 0.2,
+        speedFactor: 1,
+      }, this.duration)
+      .onUpdate(({
+        intensityMain,
+        intnesityOthers,
+        speedFactor,
+      }) => {
+        lightingMain.light.intensity = intensityMain
+        lightingOthers.forEach((light) => {
+          light.light.intensity = intnesityOthers
+        })
+        speedupShader.speedFactor = speedFactor
+        car.speedFactor = speedFactor
+        car.spinWheels()
+      })
+    tween.easing(TWEEN.Easing.Quadratic.InOut)
+    tween.chain(tweenCar)
+    tween.start()
+    return () => tween.stop()
   }
 
   /**
    * 将灯光调亮
    */
   private lightenLight() {
-    this.startroom.lightings.forEach((light) => {
-      light.light.intensity = 1
+    const lightingMain = this.startroom.lightings[0]
+    const lightingOthers = this.startroom.lightings.slice(1)
+    const speedupShader = this.speedup.material.speedupShader
+    const car = this.car
+    const tween = new TWEEN.Tween({
+      intensityMain: lightingMain.light.intensity,
+      intnesityOthers: lightingOthers[1].light.intensity,
+      speedFactor: speedupShader.speedFactor,
     })
-    this.speedup.material.speedupShader.speedFactor = 0
+      .to({
+        intensityMain: 2.0,
+        intnesityOthers: 2.0,
+        speedFactor: 0,
+      }, this.duration)
+      .onUpdate(({
+        intensityMain,
+        intnesityOthers,
+        speedFactor,
+      }) => {
+        lightingMain.light.intensity = intensityMain
+        lightingOthers.forEach((light) => {
+          light.light.intensity = intnesityOthers
+        })
+        speedupShader.speedFactor = speedFactor
+        car.speedFactor = speedFactor
+        car.spinWheels()
+      })
+    tween.easing(TWEEN.Easing.Quadratic.InOut)
+    tween.start()
+    return () => tween.stop()
   }
 
   static async create() {
