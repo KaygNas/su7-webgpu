@@ -13,7 +13,7 @@ export class CarObj extends Object3D {
 
   spinWheels(speedFactor: number = this.speedFactor) {
     this.wheels.forEach((wheel) => {
-      wheel.transform.rotationX -= 10 * speedFactor
+      wheel.transform.rotationX -= 25 * speedFactor
     })
   }
 

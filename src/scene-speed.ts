@@ -5,7 +5,7 @@ import { BlackBackground, CameraObj, CarObj, SpeedupObj, StartroomObj } from './
 
 export class SceneSpeed {
   private touch = false
-  private duration = 1200
+  private duration = 2780
   private prevTouchChange: null | (() => void) = null
   private constructor(
     public view: View3D,

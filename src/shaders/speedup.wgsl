@@ -19,7 +19,8 @@ fn vert(inputData: VertexAttributes) -> VertexOutput {
 // must name as frag, convention defined by orrilusion
 fn frag(){
     var newUV = ORI_VertexVarying.fragUV0;
-    newUV.x -= globalUniform.time * 0.005;
+    var offset = fract(newUV.x - globalUniform.time * 0.007) - newUV.x;
+    newUV.x += offset;
 
     var color = getColorNoise(newUV);
     color *= vec3(1.5, 1.0, 400.); // fine tune the color
